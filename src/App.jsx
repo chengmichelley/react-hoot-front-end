@@ -47,39 +47,54 @@ const App = () => {
     <>
       <NavBar />
       <Routes>
-        <Route path="/" element={user ? <Dashboard /> : <Landing />} />
+        {/* Core Home Route */}
+        <Route path="/" element={<Landing />} />
 
-        {user ? (
-          <>
-            {/* Protected routes (available only to signed-in users) */}
-            <Route path="/hoots" element={<HootList hoots={hoots} />} />
-            <Route
-              path="/hoots/new"
-              element={<HootForm handleAddHoot={handleAddHoot} />}
-            />
+        {/* Protected Routes (Fall back to Landing if user is signed out) */}
+        <Route
+          path="/hoots"
+          element={user ? <HootList hoots={hoots} /> : <Landing />}
+        />
+        <Route
+          path="/hoots/new"
+          element={
+            user ? <HootForm handleAddHoot={handleAddHoot} /> : <Landing />
+          }
+        />
+        <Route
+          path="/hoots/:hootId"
+          element={
+            user ? (
+              <HootDetails handleDeleteHoot={handleDeleteHoot} />
+            ) : (
+              <Landing />
+            )
+          }
+        />
+        <Route
+          path="/hoots/:hootId/edit"
+          element={
+            user ? (
+              <HootForm handleUpdateHoot={handleUpdateHoot} />
+            ) : (
+              <Landing />
+            )
+          }
+        />
+        <Route
+          path="/hoots/:hootId/comments/:commentId"
+          element={user ? <CommentForm /> : <Landing />}
+        />
 
-            <Route
-              path="/hoots/:hootId"
-              element={<HootDetails handleDeleteHoot={handleDeleteHoot} />}
-            />
-
-            <Route
-              path="/hoots/:hootId/edit"
-              element={<HootForm handleUpdateHoot={handleUpdateHoot} />}
-            />
-
-            <Route
-              path="/hoots/:hootId/comments/:commentId"
-              element={<CommentForm />}
-            />
-          </>
-        ) : (
-          <>
-            {/* Non-user routes (available only to guests) */}
-            <Route path="/sign-up" element={<SignUpForm />} />
-            <Route path="/sign-in" element={<SignInForm />} />
-          </>
-        )}
+        {/* Guest Routes (Fall back to Dashboard if user is already signed in) */}
+        <Route
+          path="/sign-up"
+          element={!user ? <SignUpForm /> : <Dashboard />}
+        />
+        <Route
+          path="/sign-in"
+          element={!user ? <SignInForm /> : <Dashboard />}
+        />
       </Routes>
     </>
   );

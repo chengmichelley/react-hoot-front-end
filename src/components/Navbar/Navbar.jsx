@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 
 import { Link } from "react-router";
+import styles from "./NavBar.module.css";
+import Logo from "../../assets/images/logo.svg";
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
@@ -11,8 +13,11 @@ const Navbar = () => {
     setUser(null);
   };
 
-  return(
-    <nav>
+  return (
+    <nav className={styles.container}>
+      <Link to="/">
+        <img src={Logo} alt="A cute owl" />
+      </Link>
       {user ? (
         <ul>
           <li>
