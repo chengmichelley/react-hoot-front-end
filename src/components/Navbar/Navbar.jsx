@@ -4,33 +4,46 @@ import { UserContext } from "../../context/UserContext";
 import { Link } from "react-router";
 
 const Navbar = () => {
-  const { user, setUser} = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
-  const handleLogOut = ()=>{
-    localStorage.removeItem('token')
-    setUser(null)
-  }
-  return (
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
+  return(
     <nav>
-      <ul>
-        {user ? (
-          <>
-            <li>
-              <Link to="/">Welcome Back {user.username}</Link>
-              <Link to="/">Dashboard</Link>
-              <Link to="/sign-in" onClick={handleLogOut}>Sign Out</Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to="/">Home</Link>
-              <Link to="/sign-up">Sign Up</Link>
-              <Link to="/sign-in">Sign In</Link>
-            </li>
-          </>
-        )}
-      </ul>
+      {user ? (
+        <ul>
+          <li>
+            <Link to="/">HOME</Link>
+          </li>
+          <li>
+            <Link to="/hoots">HOOTS</Link>
+          </li>
+          {/* Add the NEW HOOT link */}
+          <li>
+            <Link to="/hoots/new">NEW HOOT</Link>
+          </li>
+          <li>
+            <Link to="/" onClick={handleSignOut}>
+              Sign Out
+            </Link>
+          </li>
+        </ul>
+      ) : (
+        <ul>
+          <li>
+            <Link to="/">HOME</Link>
+          </li>
+          <li>
+            <Link to="/sign-in">SIGN IN</Link>
+          </li>
+          <li>
+            <Link to="/sign-up">SIGN UP</Link>
+          </li>
+        </ul>
+      )}
     </nav>
   );
 };

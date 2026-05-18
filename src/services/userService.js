@@ -9,7 +9,7 @@ export const index = async () => {
             }
         })
 
-        const data = response.json()
+        const data = await response.json()
 
         if(data.err){
             throw new Error(data.err)

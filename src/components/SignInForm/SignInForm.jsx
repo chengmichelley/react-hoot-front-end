@@ -1,8 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { signin } from "../../services/authService";
-import * as authService from "../../services/authService";
-// authService.signUp(formData)
 import { UserContext } from "../../context/UserContext";
 
 const SignInForm = () => {
@@ -31,7 +29,6 @@ const SignInForm = () => {
     } catch (error) {
         console.log(error)
         setMessage(error.message)
-        throw new Error(error.message)
     }
   };
 
